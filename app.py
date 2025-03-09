@@ -160,4 +160,3 @@ with tab2:
   AgGrid(st.session_state['result_d'].drop(columns='index'),gridOptions=g_1,height=200,fit_columns_on_grid_load=True,suppressMovableColumns=True,suppressClickEdit=True)
 
 
-badge(type="github", name="irsadler/dd2-party-optimizer")
