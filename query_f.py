@@ -128,7 +128,7 @@ def optimize_skills(search_req,result_b,pysqldf):
 def add_remove(result_a,result_c,search_req,pysqldf):
     name_=result_c.hero_name.unique()
     if len(name_)>4:
-        name_=name_[0:4]
+        name_=['Plague Doctor','Grave Robber','Runaway','Hellion']
     x=search_req["res"]+search_req["damage"]
     X=', '.join("{}".format(item) for item in x if item!='' and item!='none')
     if X=='':
