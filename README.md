@@ -3,8 +3,10 @@ The backend code for the tool is mainly Python with some light SQL. It is public
  The data was collected from tables found on the DD2 game wiki (s/o to them for doing the grind work because this app would not have been developed if I had to copy any data from the game myself.)
 
 -------------------
+
 Report bugs: to the git repo at https://github.com/irsadler/dd2-party-optimizer/issues , please glance thru and make sure yours hasn't already been reported before.
 Suggestions for the tool: happy to hear them, feel free to message irene-sadler on discord (please maybe put something like 'suggestion for DD2 app' or something in the subject line so i don't assume you are some kind of strange cold messaging catfish attempt. You can also send message on reddit @bananaguard4.
+
 -------------------
 ---Tabs---
 -----
