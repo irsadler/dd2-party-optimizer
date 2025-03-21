@@ -1,3 +1,7 @@
+Darkest Dungeon 2 Team Builder
+User Guide/Readme
+--------
+
 I felt like I would play DD2 more often with my limited gaming time every week if I didn't spend 10 minutes in the crossroads screen before every run, and then I got to thinking that this could be the case for other people also. The app is designed to provide (currently) 2 helpers for designing DD2 parties, in a way that should hopefully speed up the process. It is not designed to take all the brain work out of designing a party, and assumes that users are already at least reasonably familiar with the party comp mechanics in the game.
 
 The backend code for the tool is mainly Python with some light SQL. It deploys as a streamlit app. It is free to download and use or modify (a shoutout would be nice, but I can't force you.)
