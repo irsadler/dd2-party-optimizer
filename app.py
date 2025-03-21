@@ -51,11 +51,11 @@ lookup={'none':'',
  'Runaway': 'Run',
  'Vestal': 'Vest'}
 column_config={'value': st.column_config.NumberColumn(format='{:.2f}')}
-token_lookup=['heal','crit','riposte','burn','dodge','block','guarded','strength','speed','stealth','daze','stun',
-              'blind','weak','vuln','combo','consecration','bleed','blight','debuff','buff','none']
+token_lookup=list(set(['heal','crit','riposte','burn','dodge','block','guarded','strength','speed','stealth','daze','stun',
+              'blind','weak','vuln','combo','consecration','bleed','blight','debuff','buff','none']))
 skill_lookup=['damage', 'crit','none']
 path=['Wanderer','Best Available', 'Show All']
-stat_lookup=['none','hp','speed','bleed','blight','burn','stun','move','debuff','disease','deathblow','forward', 'backward']
+stat_lookup=list(set(['none','hp','speed','bleed','blight','burn','stun','move','debuff','disease','deathblow','forward', 'backward']))
 base_party=['Plague Doctor','Grave Robber','Runaway','Hellion']
 hero_dat=pd.read_csv(dir+'/character_sheets/hero_data_march_2k25.csv').drop(columns='Unnamed: 0')
 stat_dat=pd.read_csv(dir+'/character_sheets/stat_data_march_2k25_v2.csv').drop(columns='Unnamed: 0')
@@ -87,10 +87,9 @@ with (tab1):
     b = st.button('search', key='sb')
  with bc2:
      bht = st.toggle(label='exclude bounty hunter', value=False, key='bht',
-                     help='prevents BH from being included in calculations')
+                     help='prevents BH from being included in overall calculations')
      if bht:
          st.session_state['bht_'] = 'on'
-         lookup.pop('Bounty Hunter', None)
      else:
          st.session_state['bht_'] = 'off'
 
@@ -104,7 +103,7 @@ with (tab1):
     if hero_st['bht']=='on':
      hero_dat_1=hero_dat_1[hero_dat_1['hero_name']!='Bounty Hunter']
     h_desribe = hero_dat_1.describe()
-    result_ = query_f.describe_team(hero_dat_1,descriptive_stats_1, st.session_state['hero_req'])
+    result_ = query_f.describe_team(hero_dat_1,descriptive_stats_1, st.session_state['hero_req'],st.session_state['bht'])
     hero_st['result_0']=result_
 
 
@@ -125,7 +124,7 @@ with (tab1):
         writer.close()
         st.session_state['buffer'] = buf
         db = st.download_button(
-            label="Download as spreadsheet",
+            label="Download spreadsheet",
             data=st.session_state['buffer'],
             file_name="dd2-party-stats.xlsx",
             mime="application/vnd.ms-excel")
@@ -133,12 +132,12 @@ with (tab1):
 with tab2:
  st.markdown(query_f.read_markdown_file(dir + '/static/text_2.md'), unsafe_allow_html=True,
                 help='expand to read more')
- search_5=st.multiselect('exclude heroes', options=lookup.keys(), default='Bounty Hunter',key='search5', help='')
- search_6=st.multiselect('resistances',options=stat_lookup,default=['blight', 'disease'],key='f5',help='the tool will optimize heros for the best average of these input values')
- search_7=st.multiselect('damage',options=skill_lookup,default='damage',key='search7', help='the tool will optimize skills for the best average of these input values')
- search_8=st.multiselect('require skill effect', options=token_lookup, default='bleed',key='search8', help='the tool will try to find skills to suggest that apply (or remove) these values')
+ search_5=st.multiselect('exclude heroes', options=lookup.keys(), default='none',key='search5', help='')
+ search_6=st.multiselect('resistances & hero stats',options=stat_lookup,default=['blight', 'disease'],key='f5',help='the tool will optimize heros for the best average of these input values')
+ search_7=st.multiselect('skill damage boost',options=skill_lookup,default='damage',key='search7', help='the tool will optimize skills for the best average of these input values')
+ search_8=st.multiselect('preferred skill effects', options=token_lookup, default='bleed',key='search8', help='the tool will try to find skills to suggest that apply (or remove) these values')
  search_9=st.selectbox('filter paths', options=path, key='search9', index=0,help='this will return all paths for the selected heros, the best available path that matches the criteria entered, or wanderer path only')
- rad_2 = st.radio('level', key='slevel', options=['normal', 'mastery'], index=0, help='include mastery skill upgrades in calculation?')
+ rad_2 = st.radio('level', key='slevel', options=['normal', 'mastery'], index=0, help='search mastery skills or base only?')
 
  B=st.button('SEARCH!')
  if B:
@@ -209,7 +208,7 @@ with tab2:
         writer.close()
         st.session_state['buffer'] = buf
         db=st.download_button(
-            label="Download as spreadsheet",
+            label="Download spreadsheet",
             data=st.session_state['buffer'],
             file_name="dd2-optimized-party.xlsx",
             mime="application/vnd.ms-excel")

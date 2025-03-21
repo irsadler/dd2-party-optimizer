@@ -15,11 +15,10 @@ def random_(a):
     rng = np.random.default_rng()
     return rng.choice(a, 4, replace=False)
 
-def describe_team(team,descriptive_stats, details):
+def describe_team(team,descriptive_stats, details,bht):
     '''return summarized comparitive stats for input characters
     also will return the details for those 4 characters
     '''
-
     team_n=[details['h1'],details['h2'],details['h3'],details['h4']]
     team=team[(team['hero_name'].isin(team_n))]
     team_descriptive = team.describe()
@@ -27,8 +26,8 @@ def describe_team(team,descriptive_stats, details):
     h = descriptive_stats.loc['75%']
     mean=team_descriptive.loc['mean']
     tags=[]
-    lcomp=mean < l
-    hcomp=mean > h
+    lcomp=mean <= l
+    hcomp=mean >= h
     for i in range(mean.shape[0]):
         if lcomp[i]==True:
             tags.append([round(mean[i],2),'low'])
@@ -38,7 +37,7 @@ def describe_team(team,descriptive_stats, details):
             tags.append([round(mean[i],2),'avg'])
     stats_=pd.DataFrame(index=descriptive_stats.columns,data=tags,columns=['value','tag']).T
     stats_=pd.concat([stats_,team],axis=0)
-    stats_.index = ['party average', 'stat rating']+team_n
+    stats_.index = ['party average', 'stat rating']+team['hero_name'].tolist()
     stats_=stats_[["hp","speed","bleed","blight","burn","stun","move","debuff","disease","deathblow","forward","backward"]]
     return stats_
 
