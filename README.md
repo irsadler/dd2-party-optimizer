@@ -43,7 +43,11 @@ FYI
 -------
 
 Some general things to think about when using the builder tool:
+
 As I mentioned previously, the tool isn't designed to do all the gameplay homework for you, just to speed the crossroads screen process up. Therefore, we assume you have some general idea of how individual heroes individually work and are aware that you shouldn't use eg. Occultist as a position 1 tank. This is also why we don't provide all the details of every skill, just the numerical ones. We assume that for instance you already know that Highwayman Riposte skill has some chance of applying the combo token.
+
  The tool also only offers suggestions based on those numbers; if you think a different skill in the results loadout is a better choice, use it instead. However, if you don't care or maybe don't have time or interest in carefully curating your own loadouts, you can just pick the ones the tool indicates. Assuming you set up reasonable filters, they should return something viable.
+ 
 Using a lot of filters for skill selection is fine, but only a few may have varying results. Because I decided I always wanted to return 4 heroes, with 5 moves per path, if the tool finds that it didn't suggest enough moves to fill out a full loadout, it will simply select the next skill in order that it didn't already suggest for that hero+path. Applying none is fine, however.
+
 Using too many filters (>3) for stats&resistances may not work so well, because most heroes tend to have pretty similar stat values when you look at resistances and so trying to optimize for too many of them at once will drag parties down to 'average' stats overall.
